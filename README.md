@@ -3,8 +3,9 @@
 A lightweight, open-source CI/CD pipeline for small containerised JavaScript/TypeScript
 projects, built with GitHub Actions and Docker, deploying to a single cloud host (Render).
 
-This is the primary artefact for the HCS522 project "Designing a Lightweight CI/CD
-Pipeline for Small Software Projects".
+This is the primary artefact for the HCS522 project "Design and Implementation of a Lightweight DevOps Pipeline for Small Projects".
+
+Test 10
 
 ## What the pipeline does
 

@@ -1,130 +1,135 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="1900" viewBox="0 0 1300 1900" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
-  <title>Lightweight CI/CD pipeline — architecture</title>
-  <desc>Developer pushes to GitHub, which triggers a GitHub Actions workflow of three jobs: build-test (lint, build, test), containerise-deploy (containerise, deploy, verify live) and record-metrics, which runs always. The pipeline is the only trigger for deployment to the cloud host.</desc>
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 716" width="500" height="716">
   <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#000"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#111111"/>
     </marker>
+    <style>
+      .bx    { fill:#ffffff; stroke:#111111; stroke-width:1.1; }
+      .dbx   { fill:none; stroke:#111111; stroke-width:1; stroke-dasharray:4 3; }
+      .ln    { stroke:#111111; stroke-width:1.1; fill:none; }
+      .dln   { stroke:#111111; stroke-width:1; fill:none; stroke-dasharray:4 3; }
+      text   { font-family:'FreeSans','Helvetica Neue',Helvetica,Arial,sans-serif; fill:#111111; }
+      .t1    { font-size:13px; font-weight:700; text-anchor:middle; }
+      .t2    { font-size:11.5px; font-weight:700; text-anchor:middle; }
+      .sub   { font-size:7.2px; fill:#6b6b6b; text-anchor:middle; }
+      .jlab  { font-size:8px; font-weight:700; }
+      .side  { font-size:7.6px; font-weight:700; text-anchor:middle; }
+      .mono  { font-size:5.4px; fill:#3a3a3a; text-anchor:middle; letter-spacing:0.15px; }
+      .mlist { font-size:6.6px; fill:#3a3a3a; text-anchor:middle; }
+      .note  { font-size:5.6px; fill:#7a7a7a; font-style:italic; text-anchor:middle; }
+      .edge  { font-size:6.6px; fill:#3a3a3a; }
+    </style>
   </defs>
 
-  <rect width="1300" height="1900" fill="#ffffff"/>
+  <rect x="0" y="0" width="500" height="716" fill="#ffffff"/>
 
-  <g stroke="#000" fill="none" stroke-width="2.5">
-    <!-- outer boxes -->
-    <rect x="430" y="30" width="440" height="120"/>
-    <rect x="430" y="210" width="440" height="120"/>
+  <!-- Developer -->
+  <rect class="bx" x="163" y="12" width="175" height="48" rx="1"/>
+  <text class="t1" x="250.5" y="34">Developer</text>
+  <text class="sub" x="250.5" y="47">git commit &amp; push</text>
+
+  <line class="ln" x1="250.5" y1="60" x2="250.5" y2="78" marker-end="url(#arrow)"/>
+
+  <!-- GitHub repository -->
+  <rect class="bx" x="163" y="80" width="175" height="48" rx="1"/>
+  <text class="t1" x="250.5" y="102">GitHub repository</text>
+  <text class="sub" x="250.5" y="115">triggers workflow on push to main</text>
+
+  <line class="ln" x1="250.5" y1="128" x2="250.5" y2="148" marker-end="url(#arrow)"/>
+
+  <!-- Pipeline outer box -->
+  <rect class="dbx" x="72" y="150" width="406" height="440"/>
+  <text class="t1" x="275" y="174">GitHub Actions pipeline</text>
+  <text class="sub" x="275" y="187">cicd.yml — three jobs</text>
+
+  <!-- build-test job -->
+  <rect class="dbx" x="155" y="200" width="190" height="178"/>
+  <text class="jlab" x="161" y="213">build-test</text>
+
+  <rect class="bx" x="165" y="220" width="170" height="44" rx="1"/>
+  <text class="t2" x="250" y="241">Lint</text>
+  <text class="sub" x="250" y="253">static checks</text>
+
+  <line class="ln" x1="250" y1="264" x2="250" y2="274" marker-end="url(#arrow)"/>
+
+  <rect class="bx" x="165" y="276" width="170" height="44" rx="1"/>
+  <text class="t2" x="250" y="297">Build</text>
+  <text class="sub" x="250" y="309">compile</text>
+
+  <line class="ln" x1="250" y1="320" x2="250" y2="330" marker-end="url(#arrow)"/>
+
+  <rect class="bx" x="165" y="332" width="170" height="44" rx="1"/>
+  <text class="t2" x="250" y="353">Test</text>
+  <text class="sub" x="250" y="365">unit / integration</text>
+
+  <!-- job to job -->
+  <line class="ln" x1="250" y1="378" x2="250" y2="394" marker-end="url(#arrow)"/>
+
+  <!-- containerise-deploy job -->
+  <rect class="dbx" x="155" y="396" width="190" height="178"/>
+  <text class="jlab" x="161" y="409">containerise-deploy</text>
+
+  <rect class="bx" x="165" y="414" width="170" height="44" rx="1"/>
+  <text class="t2" x="250" y="435">Containerise</text>
+  <text class="sub" x="250" y="447">Docker image → ghcr.io</text>
+
+  <line class="ln" x1="250" y1="458" x2="250" y2="468" marker-end="url(#arrow)"/>
+
+  <rect class="bx" x="165" y="470" width="170" height="44" rx="1"/>
+  <text class="t2" x="250" y="491">Deploy</text>
+  <text class="sub" x="250" y="503">trigger deploy hook</text>
+
+  <line class="ln" x1="250" y1="514" x2="250" y2="524" marker-end="url(#arrow)"/>
+
+  <rect class="bx" x="165" y="526" width="170" height="44" rx="1"/>
+  <text class="t2" x="250" y="547">Verify live</text>
+  <text class="sub" x="250" y="559">poll /health until fresh container</text>
+
+  <!-- secrets & variables -->
+  <rect class="dbx" x="84" y="456" width="64" height="66"/>
+  <text class="side" x="116" y="466">secrets &amp;</text>
+  <text class="side" x="116" y="476">variables</text>
+  <text class="mono" x="116" y="490">DEPLOY_HOOK_URL</text>
+  <text class="mono" x="116" y="499">SERVICE_URL</text>
+  <text class="mono" x="116" y="508">GITHUB_TOKEN</text>
+  <line class="dln" x1="148" y1="492" x2="163" y2="492" marker-end="url(#arrow)"/>
+
+  <!-- record-metrics -->
+  <rect class="dbx" x="358" y="432" width="112" height="118"/>
+  <text class="side" x="414" y="455" style="font-size:9px">record-metrics</text>
+  <text class="note" x="414" y="466" style="font-size:6.4px">(if: always())</text>
+  <text class="mlist" x="414" y="484">deployment success</text>
+  <text class="mlist" x="414" y="494">execution time</text>
+  <text class="mlist" x="414" y="504">config footprint</text>
+  <text class="mlist" x="414" y="514">cold start</text>
+  <text class="mlist" x="414" y="531" style="font-weight:700">→ metrics.csv</text>
+  <line class="dln" x1="345" y1="492" x2="356" y2="492" marker-end="url(#arrow)"/>
+
+  <!-- pass / fail feedback loop -->
+  <path class="dln" d="M 155 290 L 40 290 L 40 36 L 161 36" marker-end="url(#arrow)"/>
+  <text class="edge" x="34" y="200" text-anchor="middle"
+        transform="rotate(-90 34 200)">pass / fail feedback</text>
+
+  <!-- pipeline to host -->
+  <line class="ln" x1="205" y1="574" x2="205" y2="642" marker-end="url(#arrow)"/>
+  <text class="edge" x="199" y="600" text-anchor="end">deploy hook</text>
+
+  <line class="ln" x1="295" y1="642" x2="295" y2="574" marker-end="url(#arrow)"/>
+  <text class="edge" x="301" y="600">GET /health</text>
+
+  <!-- Cloud host -->
+  <g transform="translate(99.2 268.8) scale(0.60)">
+    <path class="bx" d="M 172 722
+      C 150 722 138 708 142 692
+      C 130 680 136 660 154 656
+      C 156 636 178 626 196 636
+      C 206 616 238 612 254 628
+      C 270 616 298 620 306 640
+      C 330 636 350 652 346 672
+      C 362 680 362 706 344 716
+      C 338 722 330 722 324 722 Z"/>
   </g>
-
-  <g text-anchor="middle" fill="#000">
-    <text x="650" y="82" font-size="28" font-weight="bold">Developer</text>
-    <text x="650" y="118" font-size="21" fill="#666">git commit &amp; push</text>
-    <text x="650" y="262" font-size="28" font-weight="bold">GitHub repository</text>
-    <text x="650" y="298" font-size="21" fill="#666">triggers workflow on push to main</text>
-  </g>
-
-  <g stroke="#000" stroke-width="2.5" marker-end="url(#arrow)">
-    <line x1="650" y1="150" x2="650" y2="203"/>
-    <line x1="650" y1="330" x2="650" y2="383"/>
-  </g>
-
-  <!-- pipeline boundary -->
-  <rect x="210" y="390" width="1060" height="1170" fill="none" stroke="#000" stroke-width="2.5" stroke-dasharray="9,7"/>
-  <text x="650" y="445" text-anchor="middle" font-size="30" font-weight="bold">GitHub Actions pipeline</text>
-  <text x="650" y="481" text-anchor="middle" font-size="21" fill="#666">cicd.yml — three jobs</text>
-
-  <!-- job: build-test -->
-  <rect x="400" y="515" width="500" height="460" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="6,5"/>
-  <text x="418" y="548" font-size="22" font-weight="bold" fill="#000">build-test</text>
-
-  <g stroke="#000" fill="none" stroke-width="2.5">
-    <rect x="430" y="565" width="440" height="110"/>
-    <rect x="430" y="705" width="440" height="110"/>
-    <rect x="430" y="845" width="440" height="110"/>
-  </g>
-  <g text-anchor="middle" fill="#000">
-    <text x="650" y="608" font-size="26" font-weight="bold">Lint</text>
-    <text x="650" y="642" font-size="20" fill="#666">static checks — cheapest first</text>
-    <text x="650" y="748" font-size="26" font-weight="bold">Build</text>
-    <text x="650" y="782" font-size="20" fill="#666">compile (TypeScript projects)</text>
-    <text x="650" y="888" font-size="26" font-weight="bold">Test</text>
-    <text x="650" y="922" font-size="20" fill="#666">unit / integration</text>
-  </g>
-  <g stroke="#000" stroke-width="2.5" marker-end="url(#arrow)">
-    <line x1="650" y1="675" x2="650" y2="700"/>
-    <line x1="650" y1="815" x2="650" y2="840"/>
-    <line x1="650" y1="975" x2="650" y2="1020"/>
-  </g>
-
-  <!-- job: containerise-deploy -->
-  <rect x="400" y="1025" width="500" height="460" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="6,5"/>
-  <text x="418" y="1058" font-size="22" font-weight="bold" fill="#000">containerise-deploy</text>
-
-  <g stroke="#000" fill="none" stroke-width="2.5">
-    <rect x="430" y="1075" width="440" height="110"/>
-    <rect x="430" y="1215" width="440" height="110"/>
-    <rect x="430" y="1355" width="440" height="110"/>
-  </g>
-  <g text-anchor="middle" fill="#000">
-    <text x="650" y="1118" font-size="26" font-weight="bold">Containerise</text>
-    <text x="650" y="1152" font-size="20" fill="#666">Docker image → ghcr.io</text>
-    <text x="650" y="1258" font-size="26" font-weight="bold">Deploy</text>
-    <text x="650" y="1292" font-size="20" fill="#666">trigger deploy hook</text>
-    <text x="650" y="1398" font-size="26" font-weight="bold">Verify live</text>
-    <text x="650" y="1432" font-size="20" fill="#666">poll /health until fresh container</text>
-  </g>
-  <g stroke="#000" stroke-width="2.5" marker-end="url(#arrow)">
-    <line x1="650" y1="1185" x2="650" y2="1210"/>
-    <line x1="650" y1="1325" x2="650" y2="1350"/>
-  </g>
-
-  <!-- secrets and variables -->
-  <rect x="228" y="1175" width="160" height="215" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="6,5"/>
-  <g text-anchor="middle" fill="#000">
-    <text x="308" y="1212" font-size="19" font-weight="bold">secrets &amp;</text>
-    <text x="308" y="1234" font-size="19" font-weight="bold">variables</text>
-    <text x="308" y="1276" font-size="15" fill="#666">DEPLOY_HOOK_URL</text>
-    <text x="308" y="1302" font-size="15" fill="#666">SERVICE_URL</text>
-    <text x="308" y="1328" font-size="15" fill="#666">GITHUB_TOKEN</text>
-    <text x="308" y="1364" font-size="15" fill="#666">never in logs</text>
-  </g>
-  <line x1="390" y1="1270" x2="425" y2="1270" stroke="#000" stroke-width="2" stroke-dasharray="6,5" marker-end="url(#arrow)"/>
-
-  <!-- job: record-metrics -->
-  <rect x="950" y="1150" width="300" height="290" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="6,5"/>
-  <g text-anchor="middle" fill="#000">
-    <text x="1100" y="1198" font-size="25" font-weight="bold">record-metrics</text>
-    <text x="1100" y="1230" font-size="20" fill="#666" font-style="italic">if: always()</text>
-    <text x="1100" y="1288" font-size="18">deployment success</text>
-    <text x="1100" y="1316" font-size="18">execution time</text>
-    <text x="1100" y="1344" font-size="18">config footprint</text>
-    <text x="1100" y="1372" font-size="18">cold start</text>
-    <text x="1100" y="1412" font-size="18" font-weight="bold">→ metrics.csv</text>
-  </g>
-
-  <!-- both jobs feed the metrics job, pass or fail -->
-  <g stroke="#000" stroke-width="2" stroke-dasharray="6,5" fill="none" marker-end="url(#arrow)">
-    <polyline points="900,745 925,745 925,1250 945,1250"/>
-    <polyline points="900,1350 945,1350"/>
-  </g>
-
-  <!-- pass / fail feedback to the developer -->
-  <polyline points="400,745 120,745 120,90 425,90" fill="none" stroke="#000" stroke-width="2.5" stroke-dasharray="9,7" marker-end="url(#arrow)"/>
-  <text x="98" y="470" font-size="23" fill="#000" transform="rotate(-90 98 470)" text-anchor="middle">pass / fail feedback</text>
-
-  <!-- deployment and health check -->
-  <line x1="600" y1="1465" x2="600" y2="1618" stroke="#000" stroke-width="2.5" marker-end="url(#arrow)"/>
-  <line x1="705" y1="1618" x2="705" y2="1470" stroke="#000" stroke-width="2" stroke-dasharray="6,5" marker-end="url(#arrow)"/>
-  <text x="722" y="1553" font-size="18" fill="#666">GET /health</text>
-  <text x="588" y="1553" font-size="18" fill="#666" text-anchor="end">deploy hook</text>
-
-  <!-- cloud host -->
-  <path d="M 505,1778 C 462,1778 462,1714 505,1706 C 499,1652 562,1626 597,1653 C 618,1611 692,1611 712,1653 C 754,1637 799,1674 788,1710 C 830,1721 824,1778 782,1778 Z"
-        fill="none" stroke="#000" stroke-width="2.5"/>
-  <g text-anchor="middle" fill="#000">
-    <text x="645" y="1706" font-size="27" font-weight="bold">Cloud host</text>
-    <text x="645" y="1738" font-size="19" fill="#666">Render — Auto-Deploy: Off</text>
-  </g>
-
-  <text x="650" y="1848" text-anchor="middle" font-size="19" fill="#666" font-style="italic">The pipeline is the only path to production: the host's own auto-deploy is disabled.</text>
+  <text class="t1" x="248" y="667" style="font-size:10.5px">Cloud host</text>
+  <text class="sub" x="248" y="678" style="font-size:6.4px">Render</text>
 </svg>
